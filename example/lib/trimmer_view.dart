@@ -6,8 +6,9 @@ import 'package:network_video_trimmer/video_trimmer.dart';
 
 class TrimmerView extends StatefulWidget {
   final File file;
+  final Uri networkFile;
 
-  const TrimmerView(this.file, {Key? key}) : super(key: key);
+  const TrimmerView(this.file, this.networkFile, {Key? key}) : super(key: key);
   @override
   State<TrimmerView> createState() => _TrimmerViewState();
 }
@@ -29,7 +30,8 @@ class _TrimmerViewState extends State<TrimmerView> {
   }
 
   void _loadVideo() {
-    _trimmer.loadVideoFromFile(videoFile: widget.file);
+    //_trimmer.loadVideoFromFile(videoFile: widget.file);
+    _trimmer.loadVideoFromNetworkUri(videoUri: widget.networkFile);
   }
 
   _saveVideo() {

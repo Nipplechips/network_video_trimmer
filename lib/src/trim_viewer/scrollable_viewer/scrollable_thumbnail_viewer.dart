@@ -6,7 +6,7 @@ import 'package:transparent_image/transparent_image.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
 
 class ScrollableThumbnailViewer extends StatelessWidget {
-  final File videoFile;
+  final String videoFilePath;
   final int videoDuration;
   final double thumbnailHeight;
   final BoxFit fit;
@@ -19,7 +19,7 @@ class ScrollableThumbnailViewer extends StatelessWidget {
   /// like a frame by frame preview
   const ScrollableThumbnailViewer({
     Key? key,
-    required this.videoFile,
+    required this.videoFilePath,
     required this.videoDuration,
     required this.thumbnailHeight,
     required this.numberOfThumbnails,
@@ -30,7 +30,7 @@ class ScrollableThumbnailViewer extends StatelessWidget {
   }) : super(key: key);
 
   Stream<List<Uint8List?>> generateThumbnail() async* {
-    final String videoPath = videoFile.path;
+    final String videoPath = videoFilePath;
     double eachPart = videoDuration / numberOfThumbnails;
     List<Uint8List?> byteList = [];
     // the cache of last thumbnail

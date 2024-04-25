@@ -11,28 +11,23 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Video Trimmer"),
-      ),
-      body: Center(
-        child: ElevatedButton(
-          child: const Text("LOAD VIDEO"),
-          onPressed: () async {
-            FilePickerResult? result = await FilePicker.platform.pickFiles(
-              type: FileType.video,
-              allowCompression: false,
-            );
-            if (result != null) {
-              File file = File(result.files.single.path!);
+        appBar: AppBar(
+          title: const Text("Video Trimmer"),
+        ),
+        body: Column(children: [
+          ElevatedButton(
+            child: const Text("LOAD VIDEO"),
+            onPressed: () {
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) {
-                  return TrimmerView(file);
+                  return TrimmerView(
+                      File(""),
+                      Uri.parse(
+                          "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"));
                 }),
               );
-            }
-          },
-        ),
-      ),
-    );
+            },
+          )
+        ]));
   }
 }

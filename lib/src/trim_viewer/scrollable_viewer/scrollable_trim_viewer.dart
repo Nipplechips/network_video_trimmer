@@ -142,7 +142,7 @@ class ScrollableTrimViewer extends StatefulWidget {
 
 class _ScrollableTrimViewerState extends State<ScrollableTrimViewer> with TickerProviderStateMixin {
   final _trimmerAreaKey = GlobalKey();
-  File? get _videoFile => widget.trimmer.currentVideoFile;
+  String? get _videoFilePath => widget.trimmer.currentVideoFilePath;
 
   double _videoStartPos = 0.0;
   double _videoEndPos = 0.0;
@@ -326,7 +326,7 @@ class _ScrollableTrimViewerState extends State<ScrollableTrimViewer> with Ticker
         _numberOfThumbnails = numberOfThumbnailsTotal;
         final thumbnailWidget = ScrollableThumbnailViewer(
           scrollController: _scrollController,
-          videoFile: _videoFile!,
+          videoFilePath: _videoFilePath!,
           videoDuration: _videoDuration,
           fit: widget.areaProperties.thumbnailFit,
           thumbnailHeight: _thumbnailViewerH,
@@ -377,7 +377,7 @@ class _ScrollableTrimViewerState extends State<ScrollableTrimViewer> with Ticker
   }
 
   Future<void> _initializeVideoController() async {
-    if (_videoFile == null) return;
+    if (_videoFilePath == null) return;
     videoPlayerController.addListener(() {
       final bool isPlaying = videoPlayerController.value.isPlaying;
 
@@ -543,7 +543,7 @@ class _ScrollableTrimViewerState extends State<ScrollableTrimViewer> with Ticker
     _scrollStartTimer?.cancel();
     _scrollingTimer?.cancel();
     widget.onChangePlaybackState!(false);
-    if (_videoFile != null) {
+    if (_videoFilePath != null) {
       videoPlayerController.setVolume(0.0);
       videoPlayerController.dispose();
       widget.onChangePlaybackState!(false);

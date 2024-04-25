@@ -135,7 +135,7 @@ class FixedTrimViewer extends StatefulWidget {
 
 class _FixedTrimViewerState extends State<FixedTrimViewer> with TickerProviderStateMixin {
   final _trimmerAreaKey = GlobalKey();
-  File? get _videoFile => widget.trimmer.currentVideoFile;
+  String? get _videoFilePath => widget.trimmer.currentVideoFilePath;
 
   double _videoStartPos = 0.0;
   double _videoEndPos = 0.0;
@@ -202,7 +202,7 @@ class _FixedTrimViewerState extends State<FixedTrimViewer> with TickerProviderSt
         _thumbnailViewerW = _numberOfThumbnails * _thumbnailViewerH;
 
         final FixedThumbnailViewer thumbnailWidget = FixedThumbnailViewer(
-          videoFile: _videoFile!,
+          videoFilePath: _videoFilePath!,
           videoDuration: _videoDuration,
           fit: widget.areaProperties.thumbnailFit,
           thumbnailHeight: _thumbnailViewerH,
@@ -255,7 +255,7 @@ class _FixedTrimViewerState extends State<FixedTrimViewer> with TickerProviderSt
   }
 
   Future<void> _initializeVideoController() async {
-    if (_videoFile != null) {
+    if (_videoFilePath != null) {
       videoPlayerController.addListener(() {
         final bool isPlaying = videoPlayerController.value.isPlaying;
 
@@ -398,7 +398,7 @@ class _FixedTrimViewerState extends State<FixedTrimViewer> with TickerProviderSt
   void dispose() {
     videoPlayerController.pause();
     widget.onChangePlaybackState!(false);
-    if (_videoFile != null) {
+    if (_videoFilePath != null) {
       videoPlayerController.setVolume(0.0);
       videoPlayerController.dispose();
       widget.onChangePlaybackState!(false);

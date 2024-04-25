@@ -29,7 +29,7 @@ class Trimmer {
 
   VideoPlayerController? get videoPlayerController => _videoPlayerController;
 
-  File? currentVideoFile;
+  String? currentVideoFilePath;
 
   /// Listen to this stream to catch the events
   Stream<TrimmerEvent> get eventStream => _controller.stream;
@@ -38,9 +38,9 @@ class Trimmer {
   ///
   /// Returns the loaded video file.
   Future<void> loadVideoFromFile({required File videoFile}) async {
-    currentVideoFile = videoFile;
+    currentVideoFilePath = videoFile.path;
     if (videoFile.existsSync()) {
-      _videoPlayerController = VideoPlayerController.file(currentVideoFile!);
+      _videoPlayerController = VideoPlayerController.file(File(currentVideoFilePath!));
       await _videoPlayerController!.initialize().then((_) {
         _controller.add(TrimmerEvent.initialized);
       });
@@ -48,7 +48,7 @@ class Trimmer {
   }
 
   Future<void> loadVideoFromNetworkUri({required Uri videoUri}) async {
-    currentVideoFile = File("");
+    currentVideoFilePath = videoUri.toString();
     _videoPlayerController = VideoPlayerController.networkUrl(videoUri);
     await _videoPlayerController!.initialize().then((_) {
       _controller.add(TrimmerEvent.initialized);
@@ -178,7 +178,7 @@ class Trimmer {
     String? videoFileName,
     StorageDir? storageDir,
   }) async {
-    final String videoPath = currentVideoFile!.path;
+    final String videoPath = currentVideoFilePath!;
     final String videoName = basename(videoPath).split('.')[0];
 
     String command;
