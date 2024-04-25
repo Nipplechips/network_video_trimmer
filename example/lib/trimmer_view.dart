@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:example/preview.dart';
 import 'package:flutter/material.dart';
-import 'package:video_trimmer/video_trimmer.dart';
+import 'package:network_video_trimmer/video_trimmer.dart';
 
 class TrimmerView extends StatefulWidget {
   final File file;
@@ -29,7 +29,7 @@ class _TrimmerViewState extends State<TrimmerView> {
   }
 
   void _loadVideo() {
-    _trimmer.loadVideo(videoFile: widget.file);
+    _trimmer.loadVideoFromFile(videoFile: widget.file);
   }
 
   _saveVideo() {
@@ -109,8 +109,7 @@ class _TrimmerViewState extends State<TrimmerView> {
                       ),
                       onChangeStart: (value) => _startValue = value,
                       onChangeEnd: (value) => _endValue = value,
-                      onChangePlaybackState: (value) =>
-                          setState(() => _isPlaying = value),
+                      onChangePlaybackState: (value) => setState(() => _isPlaying = value),
                     ),
                   ),
                 ),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:video_trimmer/video_trimmer.dart';
+import 'package:network_video_trimmer/video_trimmer.dart';
 
 import 'fixed_viewer/fixed_trim_viewer.dart';
 import 'scrollable_viewer/scrollable_trim_viewer.dart';
@@ -198,14 +198,12 @@ class _TrimViewerState extends State<TrimViewer> with TickerProviderStateMixin {
     super.initState();
     widget.trimmer.eventStream.listen((event) {
       if (event == TrimmerEvent.initialized) {
-        final totalDuration =
-            widget.trimmer.videoPlayerController!.value.duration;
+        final totalDuration = widget.trimmer.videoPlayerController!.value.duration;
         final maxVideoLength = widget.maxVideoLength;
         final paddingFraction = widget.paddingFraction;
         final trimAreaDuration = Duration(
             milliseconds: (maxVideoLength.inMilliseconds +
-                ((paddingFraction * maxVideoLength.inMilliseconds) * 2)
-                    .toInt()));
+                ((paddingFraction * maxVideoLength.inMilliseconds) * 2).toInt()));
 
         final shouldScroll = trimAreaDuration <= totalDuration &&
             maxVideoLength.compareTo(const Duration(milliseconds: 0)) != 0;
